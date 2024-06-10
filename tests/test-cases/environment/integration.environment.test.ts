@@ -38,3 +38,18 @@ test("environment <deploy-stage-job>", async () => {
     expect(writeStreams.stdoutLines).toEqual(expect.arrayContaining(expected));
 
 });
+
+test("environment <deploy-rules-job>", async () => {
+    const writeStreams = new WriteStreamsMock();
+    await handler({
+        cwd: "tests/test-cases/environment",
+        job: ["deploy-rules-job"],
+    }, writeStreams);
+
+    const expected = [
+        chalk`{blueBright deploy-rules-job} {greenBright >} Rules For Branch`,
+        chalk`{blueBright deploy-rules-job} {greenBright >} http://rules.domain.com`,
+    ];
+    expect(writeStreams.stdoutLines).toEqual(expect.arrayContaining(expected));
+
+});
